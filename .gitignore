@@ -1,3 +1,7 @@
+# Mis archivos ignorados
+bootest.au3
+Segar.ahk.bak
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
