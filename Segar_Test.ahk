@@ -39,32 +39,41 @@ F12:: reload
 		Global Cordenadas
 		trigo  = %A_WorkingDir%\Img\trigo1.png
 		Random, SleepTime, 12000, 14000 ; Tomamos un valor al azar del tiempo de inactividad de la siega y lo guardamos en la variable SleepTime
+		Sleep, Sleeptime ;Esperamos el tiempo que nos de la funcion random
 		If (Contador = 50) ; Si el ya se ha segado 50 veces entonces se escribira una frase al azar, para despistar ue no sea un boot
 			Frases() ; Ejecutamos la funcion que lanza frases al azar
 		
-		PixelSearch, X, Y, 0, 0, 1274, 983, 0x880015, 0, Fast RGB ; Buscamos el pixel que define el trigo desde la posicion x=0, despues del color definimos la variacion a 0, y una busqueda rapida de colores RGB
-		If ErrorLevel = 0 ; Comprobamos si el color se ha encontrado
-		{
-			Cordenadas[1] := X ; Asigamos la cordenadas X a la variable global de Cordenadas
-			Cordenadas[2] := Y ; Hacemos lo mismo pero con Y
-			
-			Contador++ ; Le añadimos uno al contador de Segadas
-			ContadorPods++ ; Le añadimos 1 item
-			
-			MouseMove, Cordenadas[1], Cordenas[2] 
-			;MsgBox % Cordenadas[1] . " No hubo Errores " . Y
-		}
+/* 		PixelSearch, X, Y, 0, 0, 1274, 983, 0x880015, 0, Fast RGB ; Buscamos el pixel que define el trigo desde la posicion x=0, despues del color definimos la variacion a 0, y una busqueda rapida de colores RGB
+ * 		If ErrorLevel = 0 ; Comprobamos si el color se ha encontrado
+ * 		{
+ * 			Cordenadas[1] := X ; Asigamos la cordenadas X a la variable global de Cordenadas
+ * 			Cordenadas[2] := Y ; Hacemos lo mismo pero con Y
+ * 			
+ * 			Contador++ ; Le añadimos uno al contador de Segadas
+ * 			ContadorPods++ ; Le añadimos 1 item
+ * 			
+ * 			MouseMove, Cordenadas[1], Cordenadas[2] 
+ * 			Sleep, 200
+ * 			MouseClick, left, Cordenadas[1], Cordenadas[2]
+ * 			
+ * 		}
+ */
 		
-		MsgBox % X . " - " . Y
+		;MsgBox % X . " - " . Y
 		CoordMode, Pixel, Screen
 		ImageSearch, FoundX, FoundY, 0, 0, 1274, 983,*15 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
 		If ErrorLevel = 0 ; Si encontro la imagen
 		{   
-			MouseMove, FoundX, FoundY 
-			MsgBox % FoundX . " - " . A_WorkingDir . " - " FoundY
+			MouseMove, FoundX, FoundY
+			MouseClick, left, FoundX, FoundY
+			Sleep, 600
+			MouseClick, left, FoundX+22, FoundY+50
+			;MsgBox % FoundX . " - " . A_WorkingDir . " - " FoundY
 		}
 		
 		;MsgBox, Nada No sirbe %trigo%
+		Sleep, 1000
+		Verificar()
 	}
 	
 	Frases() ;Creamos una funcion con frases aleatorias
@@ -92,5 +101,11 @@ F12:: reload
 		Send {Enter} ; Y presionamos enter
 		Contador := 0 ; Reinicializamos el contador
 	}
+	
+	Verificar()
+	{
+		Segar()
+	}
+	
 	return
 }
