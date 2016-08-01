@@ -76,15 +76,15 @@ F12:: reload
 		MouseClick, left, CoordChatX, CoordChatY ;Clickeamos en el chat para que podemas escibir sobre el
 		
 		If Frases = 1 
-			Send "tu est lvl combien ?"
+			Send "Tambien estas leveando el campesino?"
 		If Frases = 2 
-			Send "je suis lvl 100 paysan"
+			Send "Men, tu eres level 100 campesino"
 		If Frases = 3 
-			Send "paysans c'est facile"
+			Send "Segar es facil"
 		If Frases = 4 
-			Send "je suis aussi boulanger 100"
+			Send "Casi soy panadero 100"
 		If Frases = 5 
-			Send "ZZZzzzZZZzzzZZZzzzZZZzzzZZZzzz...ZZZ!"
+			Send "Mmmmm!"
 		
 		Sleep, 1300 ; Espamos un poquito mas de un segundo 
 		Send {Enter} ; Y presionamos enter
