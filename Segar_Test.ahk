@@ -61,9 +61,14 @@ F12:: reload
 		
 		;MsgBox % X . " - " . Y
 		CoordMode, Pixel, Screen
-		ImageSearch, FoundX, FoundY, 0, 0, 1274, 983,*15 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
+		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*115 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
 		If ErrorLevel = 0 ; Si encontro la imagen
 		{   
+			Cordenadas[1] := FoundX ; Asigamos la cordenadas X a la variable global de Cordenadas
+ 			Cordenadas[2] := FoundY ; Hacemos lo mismo pero con Y
+  			
+  			Contador++ ; Le añadimos uno al contador de Segadas
+  			ContadorPods++ ; Le añadimos 1 item
 			MouseMove, FoundX, FoundY
 			MouseClick, left, FoundX, FoundY
 			Sleep, 600
