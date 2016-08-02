@@ -77,6 +77,15 @@ F12:: reload
 		Global ContadorPods
 		Global ColorSalmon
 		combate = %A_WorkingDir%\Img\combate.png ; Imagen que solo se ve cuando hay un combate (ente estas posiciones: 590, 870, 625, 900)
+		nivelok = %A_WorkingDir%\Img\nivel-ok.png ; Imagen que se ve cuando el oficio pasa de nivel
+		
+		ImageSearch, FoundX, FoundY, 0, 0, 1100, 600,*50 %nivelok% ; Buscamos en la posicion: 550, 390, 430, 645; la imagen que nos indica que pasamos de nivel 
+		If ErrorLevel = 0 ; Si encontro la imagen de pasar nivel
+		{
+			Send, {Enter} ; Presionamos la tecla Enter
+			MsgBox, Holaaaaaaaaaaa
+		}
+		MsgBox, % nivelok
 		
 		If ContadorPods > 20 ; Se comprueba si el numero de veces que se ha segado es mayor a 10, Revisamos el inventario
 		{

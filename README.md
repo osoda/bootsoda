@@ -13,7 +13,7 @@ Este boot es una traduccion a Autohotkey del boot Flydofus hecho en Autoit por F
 <strong>*Sistema de prueba</strong>
 Este escript solo funciona con las siguientes caracteristicas. Para que funcione en otro equipo se deben ajustar 
 los parametros donde hay imagenes, pixeles y  cordenadas (se ajustan al equipo donde se va a usar)
-<p>---- Se probo en un monitor con las siguientes caracteristicas
+<p>---- Se probó en un monitor con las siguientes caracteristicas
 	  - Resolucion : 1280 *1024 * 60 hercios
       - Bits/píxel : 32</p>	 
 <p>---- Algunos archivos del juego se modificaron para ayudar a la distincion  de patrones
