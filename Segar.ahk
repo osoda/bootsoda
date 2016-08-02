@@ -48,49 +48,93 @@ F12:: reload
 			Frases() ; Ejecutamos la funcion que lanza frases al azar
 		
 		CoordMode, Pixel, Screen
-		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*115 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
+		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*130 %trigo% ; Buscamos la imagen del trigo con una diferencia de contraste del 115
 		If ErrorLevel = 0 ; Si encontro la imagen
 		{   
 			Cordenadas[1] := FoundX ; Asigamos la cordenadas X a la variable global de Cordenadas
  			Cordenadas[2] := FoundY ; Hacemos lo mismo pero con Y
-  			
+  			;MsgBox, Encontro la imagen del TRIGO
   			Contador++ ; Le añadimos uno al contador de Segadas
   			ContadorPods++ ; Le añadimos 1 item
 			MouseClick, left, FoundX, FoundY ; Movemos el mouse hacia el trigo y le damos click 
 			Sleep, 400
 			MouseMove, FoundX+22, FoundY+50 ;
-			Sleep, 200
-			PixelSearch, X, Y, FoundX+22, FoundY+50, FoundX+50, FoundY+63, 0x880015, 0, Fast RGB ; Buscamos el pixel en una pequeña region  el pixel naranja que nos muestra cuando apuntamos sobre segar.
-			If ErrorLevel = 1 ; Comprobamos si el color se ha encontrado
-				Verifica()
+			Sleep, 600
+			PixelSearch, X, Y, FoundX+22, FoundY+50, FoundX+50, FoundY+63, ColorSalmon, 0, Fast RGB ; Buscamos el pixel en una pequeña region  el pixel naranja que nos muestra cuando apuntamos sobre segar.
+			If ErrorLevel = 1 ; Si no encontro el color
+				Verificar() ; Verificamos la causa de no haberlo encontrado
 			MouseClick, left, FoundX+22, FoundY+50
-		}		;590, 870, 625, 900
+			Sleep, SleepTime ; Esperamos el tiempo indicado para que termine de segar el PJ
+			
+		}
+		;MsgBox, No Encontro la imagend del Trigo
+		Verificar() ; Lanzamos la funcion de verificar para confirmar los pods y relanzar la funcion Segar
+
 	}
 	
-	Verifica() ; VErificamos ue realmente no puede segar y lo notificamos por medio de beeps si es necesario
+	Verificar() ; Verificamos que realmente no puede segar y lo notificamos por medio de beeps si es necesario
 	{
 		Global ContadorPods
 		Global ColorSalmon
 		combate = %A_WorkingDir%\Img\combate.png ; Imagen que solo se ve cuando hay un combate (ente estas posiciones: 590, 870, 625, 900)
 		
-		If ContadorPods > 10 ; Se comprueba si el numero de veces que se ha segado es mayor a 10, Revisamos el inventario
+		If ContadorPods > 20 ; Se comprueba si el numero de veces que se ha segado es mayor a 10, Revisamos el inventario
 		{
+			ContadorPods = 0 ; Iniciamos el contador de pods a cero
 			MouseClick, left, 938, 804 ; Le damos click al boton de abrir inventario
 			Sleep, 2000 ; Esperamos 2 segundos hasta que se abra el inventario
 			PixelGetColor, capacidad, 860, 422 ; Obtenemos el color del final de la barra de pods.
 			If capacidad = ColorSalmon ; Si el color del limite de pods marcado por nosotros es naranja inicia la funcion inventario lleno
 				InventarioLLeno() ; Lanzamos la funcion que nos reporta que se lleno el inventario
-			
-			
+			MouseClick, left, 938, 804 ; Le damos click al boton de inventario para cerrarlo
+			Sleep, 1000 ; Esperamos un segundo para que el inventario se cierre
 		}
-		Segar()
+		
+		ImageSearch, FoundX, FoundY, 590, 870, 625, 900,*15 %combate% ; Buscamos en la posicion: 590, 870, 625, 900; la imagen que nos indica que estamos en combate. 
+		If ErrorLevel = 0 ; Si encontro la imagen de batalla
+			Avisar("Tu pj se ha metido a una pelea") ; Avisar que el personaje esta en batalla.
+			
+		Segar() ; Continuamos Segando
 	}
 	
 	InventarioLLeno()
 	{
-		MsgBox, Se lleno su inventario
+		MouseClick, left, 938, 804 ; Le damos click al boton de inventario para cerrarlo
+		Avisar("El Inventario se ha llenado") ; Le indicamos al usuario que se lleno el inventario
+		Segar() ; Despues de vaciar el inventario volvemos a segar
 	}
 	
+	Avisar(msg)
+	{
+		SoundBeep, 349 * 2, 500
+		SoundBeep, 262 * 2, 500
+		SoundBeep, 349 * 2, 500
+		SoundBeep, 262 * 2, 500
+		SoundBeep, 294 * 2, 750
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 294 * 2, 750
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 294 * 2, 750
+		SoundBeep, 294 * 2, 750
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 294 * 2, 750
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 349 * 2, 500
+ 		SoundBeep, 262 * 2, 500
+ 		SoundBeep, 294 * 2, 750
+
+		MsgBox % msg
+	}
 	Frases() ;Creamos una funcion con frases aleatorias
 	{
 		Global Contador

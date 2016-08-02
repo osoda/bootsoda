@@ -61,7 +61,7 @@ F12:: reload
 		
 		;MsgBox % X . " - " . Y
 		CoordMode, Pixel, Screen
-		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*115 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
+		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*150 %trigo% ; Buscamos la imagen con una diferencia de contraste del 115
 		If ErrorLevel = 0 ; Si encontro la imagen
 		{   
 			Cordenadas[1] := FoundX ; Asigamos la cordenadas X a la variable global de Cordenadas
@@ -76,7 +76,7 @@ F12:: reload
 			;MsgBox % FoundX . " - " . A_WorkingDir . " - " FoundY
 		}
 		
-		;MsgBox, Nada No sirbe %trigo%
+		MsgBox, Nada No sirbe %trigo%
 		Sleep, 1000
 		Verificar()
 	}
@@ -92,15 +92,15 @@ F12:: reload
 		MouseClick, left, CoordChatX, CoordChatY ;Clickeamos en el chat para que podemas escibir sobre el
 		
 		If Frases = 1 
-			Send "Tambien estas leveando el campesino?"
+			Send Tambien estas leveando el campesino?
 		If Frases = 2 
-			Send "Men, tu eres level 100 campesino"
+			Send Men, tu eres level 100 campesino
 		If Frases = 3 
-			Send "Segar es facil"
+			Send Segar es facil
 		If Frases = 4 
-			Send "Casi soy panadero 100"
+			Send Casi soy panadero 100
 		If Frases = 5 
-			Send "Mmmmm!"
+			Send Mmmmm!
 		
 		Sleep, 1300 ; Espamos un poquito mas de un segundo 
 		Send {Enter} ; Y presionamos enter
