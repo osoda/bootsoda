@@ -1,6 +1,6 @@
 Process, Priority,, High
 F12:: reload
-;Procesos ;2491
+;Procesos ;8700
 ;Comentadrio de mas
 ; ------------------------------------------------- ------------------------------
 ; Verifica que Dofus este abierto y con el foco
@@ -33,7 +33,6 @@ F12:: reload
 		; Se encarga de la siega
 		; ------------------------------------------------- ------------------------------
 		Segar()
-		;Frases()
 	}
 	
 	Segar() ;Declaracion de la funcion que se encarga de segar
@@ -43,7 +42,7 @@ F12:: reload
 		Global Cordenadas
 		Global ContadorPods
 		trigo  = %A_WorkingDir%\Img\trigo1.png ; Imagen que identifica el trigo
-		Random, SleepTime, 12000, 14000 ; Tomamos un valor al azar del tiempo de inactividad de la siega y lo guardamos en la variable SleepTime
+		Random, SleepTime, 12000, 13500 ; Tomamos un valor al azar del tiempo de inactividad de la siega y lo guardamos en la variable SleepTime
 		If (Contador = 50) ; Si el ya se ha segado 50 veces entonces se escribira una frase al azar, para despistar ue no sea un boot
 			Frases() ; Ejecutamos la funcion que lanza frases al azar
 		
@@ -83,17 +82,17 @@ F12:: reload
 		If ErrorLevel = 0 ; Si encontro la imagen de pasar nivel
 		{
 			Send, {Enter} ; Presionamos la tecla Enter
-			MsgBox, Holaaaaaaaaaaa
+			Sleep, 400
 		}
-		MsgBox, % nivelok
+		;MsgBox, % nivelok
 		
-		If ContadorPods > 20 ; Se comprueba si el numero de veces que se ha segado es mayor a 10, Revisamos el inventario
+		If ContadorPods > 10 ; Se comprueba si el numero de veces que se ha segado es mayor a 12, Revisamos el inventario
 		{
 			ContadorPods = 0 ; Iniciamos el contador de pods a cero
 			MouseClick, left, 938, 804 ; Le damos click al boton de abrir inventario
 			Sleep, 2000 ; Esperamos 2 segundos hasta que se abra el inventario
-			PixelGetColor, capacidad, 860, 422 ; Obtenemos el color del final de la barra de pods.
-			If capacidad = ColorSalmon ; Si el color del limite de pods marcado por nosotros es naranja inicia la funcion inventario lleno
+			PixelSearch, FoundX, FounY, 855, 423, 858, 425, ColorSalmon, 0, Fast RGB ; Buscamos el color salmon en el limite la barra de pods
+			If ErrorLevel = 0 ; Si el color del limite de pods marcado por nosotros es naranja, inicia la funcion inventario lleno
 				InventarioLLeno() ; Lanzamos la funcion que nos reporta que se lleno el inventario
 			MouseClick, left, 938, 804 ; Le damos click al boton de inventario para cerrarlo
 			Sleep, 1000 ; Esperamos un segundo para que el inventario se cierre
@@ -159,7 +158,7 @@ F12:: reload
 		If Frases = 2 
 			Send Men, tu eres level 100 campesino
 		If Frases = 3 
-			Send Segar es facil
+			Send Segar es facil, lo dificil es pescar
 		If Frases = 4 
 			Send Casi soy panadero 100
 		If Frases = 5 
@@ -168,6 +167,8 @@ F12:: reload
 		Sleep, 1300 ; Espamos un poquito mas de un segundo 
 		Send {Enter} ; Y presionamos enter
 		Contador := 0 ; Reinicializamos el contador
+		SoundBeep, 600, 300 ; Hacemos un sonido que nos indique que aun se esta ejecutando el script
+		SoundBeep, 600, 300 ; (Cada cierto tiempo se va a repetir, si lo dejamos de escuchar revisamos )
 	}
 
 	return
