@@ -26,4 +26,5 @@
 <li>Escribe frases al azar en el chat (para despistar un poco)</li>
 <li>Verifica y avisa cuando el inventario este lleno</li>
 <li>Verifica y avisa si el Pj se metio a una pelea</li>
+<li>Auto acepta cuando el oficio pasa de nivel</li>
 </ul>
