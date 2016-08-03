@@ -28,3 +28,18 @@
 <li>Verifica y avisa si el Pj se metio a una pelea</li>
 <li>Auto acepta cuando el oficio pasa de nivel</li>
 </ul>
+<p><strong>Version 0.1.3</strong></p>
+<p>Se a&ntilde;adieron las siguientes caracteristicas:</p>
+<ul>
+<li>
+<p>Se cambio la imagen que indentifica el trigo, para que encuentre m&aacute;s.</p>
+<p>&nbsp;</p>
+</li>
+<li>
+<p>Verifica que df este activo, si no esta activo lo activa y continua ejecutando el script</p>
+<p>&nbsp;</p>
+</li>
+<li>
+<p>Correci&oacute;n - Verifica que el trigo que se ha de cortar no sea el mismo trigo, si es as&iacute; estepera un rato y vuelve a buscar mas trigos</p>
+</li>
+</ul>
