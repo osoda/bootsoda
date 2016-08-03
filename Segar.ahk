@@ -10,12 +10,12 @@ F12:: reload
 	; ------------------------------------------------- ------------------------------
 	; Espera la ejecucion de la tecla Fin
 	; ------------------------------------------------- ------------------------------
-	~End::
+	~End:: ; Main()
 	{
 		;==================== Inico del script ====================
 		
 		; Las variables se inicializan globalmente para qur puedan mantener su valor en todas las funciones:
-		Global 	Cordenadas := {base: {addr: Func("ArrayGrupos_Addr"), __Set: Func("ArrayGrupos_Setter")}} ; Creamos una matriz que tendra dos dimensiones para almacenar las cordenadas del recurso inferior
+		Global 	Cordenadas := {base: {addr: Func("ArrayGrupos_Addr"), __Set: Func("ArrayGrupos_Setter")}} ; Creamos una matriz que tendra dos dimensiones para almacenar las cordenadas del recurso anterior
 		
 		Global Contador ; Se crea un contador para almacenar el numero de veces que se envía el comando de cortar recurso.
 		
@@ -29,6 +29,9 @@ F12:: reload
 		
 		Contador := 0 ; Se inicaliza el contador en  0.
 		
+		Cordenadas[1] = 0 ;Inicializamos las cordenadas en 0
+		Cordenadas[2] = 0 ;Inicializamos las cordenadas en 0
+		
 		; ------------------------------------------------- ------------------------------
 		; Se encarga de la siega
 		; ------------------------------------------------- ------------------------------
@@ -41,23 +44,29 @@ F12:: reload
 		Global Frases
 		Global Cordenadas
 		Global ContadorPods
-		trigo  = %A_WorkingDir%\Img\trigo1.png ; Imagen que identifica el trigo
-		Random, SleepTime, 12000, 13500 ; Tomamos un valor al azar del tiempo de inactividad de la siega y lo guardamos en la variable SleepTime
+		trigo  = %A_WorkingDir%\Img\trigo4.png ; Imagen que identifica el trigo
+		ActivarDofus() ; Verificamos y activamos Dofus
+		Random, SleepTime, 11100, 12500 ; Tomamos un valor al azar del tiempo de inactividad de la siega y lo guardamos en la variable SleepTime
 		If (Contador = 50) ; Si el ya se ha segado 50 veces entonces se escribira una frase al azar, para despistar ue no sea un boot
 			Frases() ; Ejecutamos la funcion que lanza frases al azar
 		
 		CoordMode, Pixel, Screen
-		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*130 %trigo% ; Buscamos la imagen del trigo con una diferencia de contraste del 115
+		ImageSearch, FoundX, FoundY, 0, 0, 1274, 775,*70 %trigo% ; Buscamos la imagen del trigo con una diferencia de contraste del 115
 		If ErrorLevel = 0 ; Si encontro la imagen
 		{   
+			If Cordenadas[1] = FoundX ; Si encontramos el trigo en la misma posicion
+			{
+				Sleep, 100 ; Esperamos a que termine de segar 
+				Verificar() ; Y volvemos a mandar la funcion verificar para que coseche
+			}
 			Cordenadas[1] := FoundX ; Asigamos la cordenadas X a la variable global de Cordenadas
  			Cordenadas[2] := FoundY ; Hacemos lo mismo pero con Y
   			;MsgBox, Encontro la imagen del TRIGO
   			Contador++ ; Le añadimos uno al contador de Segadas
   			ContadorPods++ ; Le añadimos 1 item
-			MouseClick, left, FoundX, FoundY ; Movemos el mouse hacia el trigo y le damos click 
+			MouseClick, left, FoundX, FoundY+11 ; Movemos el mouse hacia el trigo y le damos click 
 			Sleep, 400
-			MouseMove, FoundX+22, FoundY+50 ;
+			MouseMove, FoundX+22, FoundY+61 ;
 			Sleep, 600
 			PixelSearch, X, Y, FoundX+22, FoundY+50, FoundX+50, FoundY+63, ColorSalmon, 0, Fast RGB ; Buscamos el pixel en una pequeña region  el pixel naranja que nos muestra cuando apuntamos sobre segar.
 			If ErrorLevel = 1 ; Si no encontro el color
@@ -78,6 +87,7 @@ F12:: reload
 		combate = %A_WorkingDir%\Img\combate.png ; Imagen que solo se ve cuando hay un combate (ente estas posiciones: 590, 870, 625, 900)
 		nivelok = %A_WorkingDir%\Img\nivel-ok.png ; Imagen que se ve cuando el oficio pasa de nivel
 		
+		ActivarDofus() ; Verificamos y activamos Dofus
 		ImageSearch, FoundX, FoundY, 0, 0, 1100, 600,*50 %nivelok% ; Buscamos en la posicion: 550, 390, 430, 645; la imagen que nos indica que pasamos de nivel 
 		If ErrorLevel = 0 ; Si encontro la imagen de pasar nivel
 		{
@@ -169,6 +179,12 @@ F12:: reload
 		Contador := 0 ; Reinicializamos el contador
 		SoundBeep, 600, 300 ; Hacemos un sonido que nos indique que aun se esta ejecutando el script
 		SoundBeep, 600, 300 ; (Cada cierto tiempo se va a repetir, si lo dejamos de escuchar revisamos )
+	}
+	
+	ActivarDofus()  ; Esta funcion activar la ventana de dofus cuando no este activa
+	{
+		#IfWinNotActive Dofus ; Si no esta activa la ventana de dofus (No tiene el foco) 
+			WinActivate Dofus  ;Activa la ventana de dofus (Dale el foco)
 	}
 
 	return
