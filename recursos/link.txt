@@ -1,0 +1,2 @@
+#Calculo de la distancia por medio de triangulos (creado en la version: V 0.1.9.5.50.11)
+https://www.geogebra.org/m/eqthh3k3
